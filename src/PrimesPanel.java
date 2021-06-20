@@ -81,6 +81,7 @@ public class PrimesPanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
         boxheight = getHeight()/15;
         BoxX = 0;
         BoxY = buttonsBG;
@@ -92,26 +93,28 @@ public class PrimesPanel extends JPanel {
 
         g.setColor(Color.gray);
         g.fillRect(0, 0, getWidth(), buttonsBG);
+        g.setColor(Color.black);
+        g.drawString("Please press enter after passing a positive number in!",(getWidth()/5)*2,getHeight()/23);
 
-            for (int i = 1; i <= drawBox; i++) {
-                if (isPrime(i) == true) {
-                    g.setColor(Color.cyan);
-                }
-                else
-                    g.setColor(Color.white);
-                g.fillRect(BoxX, BoxY, getWidth() / drawCols, boxheight);
-                g.setColor(Color.black);
-                g.drawRect(BoxX, BoxY, getWidth() / drawCols, boxheight);
-                if (xCheck ==drawCols) {
-                    BoxX = 0;
-                    xCheck=0;
-                    BoxY += boxheight;
-                } else
-                    BoxX += getWidth() / drawCols;
-                xCheck++;
-                repaint();
-
+        for (int i = 1; i <= drawBox; i++) {
+            if (isPrime(i) == true) {
+                g.setColor(Color.cyan);
             }
+            else
+                g.setColor(Color.white);
+            g.fillRect(BoxX, BoxY, getWidth() / drawCols, boxheight);
+            g.setColor(Color.black);
+            g.drawRect(BoxX, BoxY, getWidth() / drawCols, boxheight);
+            if (xCheck ==drawCols) {
+                BoxX = 0;
+                xCheck=0;
+                BoxY += boxheight;
+            } else
+                BoxX += getWidth() / drawCols;
+            xCheck++;
+            repaint();
+
+        }
     }
 
     private static boolean isPrime(int n) {
