@@ -9,6 +9,7 @@ public class PrimesPanel extends JPanel {
     private JTextField Numbertxt, Colstxt;
     private JLabel numlbl, colslbl;
     private int Cols, boxes, boxheight, buttonsBG, BoxX, BoxY, xCheck, drawCols, drawBox;
+    private String warning="",ColsString="",BoxesString="";
 
 
     public PrimesPanel() {
@@ -41,37 +42,55 @@ public class PrimesPanel extends JPanel {
         public void actionPerformed(ActionEvent e) throws NumberFormatException {
             if (e.getSource() == Numbertxt) {
                 try {
-                    if(Integer.parseInt(Numbertxt.getText())<1)
-                        System.out.println("Must input a positive number!");
-                    else
+                    if(Integer.parseInt(Numbertxt.getText())<1) {
+                        warning = "Must input a positive number!";
+                        repaint();
+                    }
+                    else {
                         boxes = Integer.parseInt(Numbertxt.getText());
+                        BoxesString="Number of boxes to draw: "+Numbertxt.getText();
+                        warning="";
+                        repaint();
+                    }
                     Numbertxt.setText("");
 
                 } catch (NumberFormatException a) {
                     Numbertxt.setText("");
-                    System.out.println("Must input a positive number!");
+                    warning="Must input a positive number!";
+                    repaint();
                 }
             } else if (e.getSource() == Colstxt) {
                 try {
-                    if(Integer.parseInt(Colstxt.getText())<1)
-                        System.out.println("Must input a positive number!");
-                    else
+                    if(Integer.parseInt(Colstxt.getText())<1) {
+                        warning = "Must input a positive number!";
+                        repaint();
+                    }
+                    else {
                         Cols = Integer.parseInt(Colstxt.getText());
+                        warning = "";
+                        ColsString="Number of columns to draw: "+Colstxt.getText();
+                        repaint();
+                    }
                     Colstxt.setText("");
 
                 } catch (NumberFormatException a) {
                     Colstxt.setText("");
-                    System.out.println("Must input a positive number!");
+                    warning="Must input a positive number!";
+                    repaint();
                 }
             } else if (e.getSource() == Calculate) {
                 drawBox=boxes;
                 drawCols=Cols;
+                BoxesString="Boxes drawn: "+boxes;
+                ColsString="Columns drawn: "+Cols;
                 repaint();
             } else if (e.getSource() == Clear) {
                 Cols = 0;
                 boxes = 0;
                 drawCols=0;
                 drawBox=0;
+                BoxesString="";
+                ColsString="";
                 repaint();
 
             }
@@ -85,7 +104,7 @@ public class PrimesPanel extends JPanel {
         boxheight = getHeight()/15;
         BoxX = 0;
         BoxY = buttonsBG;
-        buttonsBG = getHeight() / 20;
+        buttonsBG = getHeight() / 16;
         xCheck = 1;
 
 
@@ -94,7 +113,10 @@ public class PrimesPanel extends JPanel {
         g.setColor(Color.gray);
         g.fillRect(0, 0, getWidth(), buttonsBG);
         g.setColor(Color.black);
-        g.drawString("Please press enter after passing a positive number in!",(getWidth()/5)*2,getHeight()/23);
+        g.drawString("Please press enter after passing a number!",(getWidth()/5)*2,getHeight()/23);
+        g.drawString(warning,(getWidth()/5)*2+50,getHeight()/18);
+        g.drawString(BoxesString,getWidth()/40,getHeight()/33);
+        g.drawString(ColsString,getWidth()/40,getHeight()/23);
 
         for (int i = 1; i <= drawBox; i++) {
             if (isPrime(i) == true) {
@@ -126,6 +148,4 @@ public class PrimesPanel extends JPanel {
                 return false;
         return true;
     }
-
-
 }
